@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Tours</title>
+    <meta charset="UTF-8" />
+    <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
+    <!-- uncoment viewport meta tag, if targeting Android 4.x.x devices -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <script src="cordova.js" type="text/javascript"></script>
+    <script src="jquery-mobile/jquery.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+   
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3IHt-_wxujlFoLeljYLhWdUi1Knqblyc&sensor=false"></script>
+    <script>
+        $(function () {
+            $.mobile.defaultHomeScroll = 0;
+            $("#nav-panel").panel().enhanceWithin();
+        });
+    </script>
+    <script src="scripts/airlinedata.js" type="text/javascript"></script>
+    <script src="scripts/main.js" type="text/javascript"></script>
+    <!-- Default Stylesheet -->
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+    <!-- Phone 320x480 High DPI (aka Retina) -->
+    <link rel="stylesheet" media="only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-device-pixel-ratio:2)" href="styles/phone-480.css" type="text/css" />
+    <!-- Phone 480x800 Medium DPI (aka Samsung Galaxy S II Skyrocket) -->
+    <link rel="stylesheet" media="only screen and (min-device-width: 320px) and (max-device-width: 508px) and (-webkit-device-pixel-ratio:1.5)" href="styles/phone-800.css" type="text/css" />
+    <!-- Tablet 768x1024 Low DPI (aka iPad 1 & 2") -->
+    <link rel="stylesheet" media="only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio:1)" href="styles/tablet-1024-ldpi.css" type="text/css" />
+    <!-- Phone 720x1280 High DPI (aka Google Nexus) -->
+    <link rel="stylesheet" media="only screen and (min-device-width: 720px) and (max-device-width: 1280px) and (-webkit-device-pixel-ratio:2)" href="styles/phone-1280.css" type="text/css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.2.903/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.2.903/styles/kendo.default.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.2.903/styles/kendo.dataviz.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.2.903/styles/kendo.dataviz.default.min.css">
+    <script src="http://cdn.kendostatic.com/2014.2.903/js/kendo.all.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.2.903/styles/kendo.rtl.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.2.903/styles/kendo.mobile.all.min.css">
+  
+   <link rel="stylesheet" href="http://www.beyondtheballot.com/tour/themes/blue.css?" />
+<link rel="stylesheet" href="http://www.beyondtheballot.com/tour/themes/jquery.mobile.icons.min.css" />
+    
+    <script src="http://cdn.kendostatic.com/2014.2.903/js/angular.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2014.2.903/js/jszip.min.js"></script>
+   
+    </head>
+
+<body>
+ 
+    
+    
+    <div data-role="panel" data-position="left" data-position-fixed="true" data-display="push" id="nav-panel" data-theme="b">
+
+					<ul data-role="listview" data-theme="b" data-divider-theme="a" style="margin-top:-16px;" class="nav-search">
+						<li data-icon="delete" style="background-color:#111;">
+							<a href="#home">Home</a>
+						</li>
+						
+						<li data-filtertext="accordions collapsible set collapsible-set collapsed">
+							<a href="#createTourPage">Create a Tour</a>
+						</li>
+						<li data-filtertext="ajax navigation model">
+							<a href="#find">Find a Property Near You</a>
+						</li>
+                        <li data-filtertext="ajax navigation model">
+							<a href="#find">Bookmarked Properties</a>
+						</li>
+						<li data-filtertext="anatomy of page viewport">
+							<a href="../pages/page-anatomy.html">Order a Sign</a>
+						</li>
+			            <li data-filtertext="wai-aria voiceover accessibility screen reader">
+							<a href="#acct">My Account</a>
+						</li>
+						<li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+							<a href="../forms/checkboxes/">Get Help</a>
+						</li>
+                        
+                        <li data-filtertext="input forms multi select checkbox checks grouped horizontal toggle legend">
+							<a href="#logon">Logout</a>
+						</li>
+					</ul>
+
+					<!-- panel content goes here -->
+				</div><!-- /panel -->
+      
+    
+  
+    <!-- home page -->
+    <div id="home" data-role="page" data-mini="true" >
+     
+         
+        <div data-role="header"  data-tap-toggle="false" data-position="fixed" data-theme="b">
+          <img src="http://beyondtheballot.com/tour/images/home_logo.png" class="ui-btn-right"   style="margin-top:8px;"/>
+            
+            <h1 style="font-size:1.3em;">Reala<em>TOUR</em></h1>
+            <a href="#nav-panel" data-icon="bars" data-iconpos="notext" data-theme="b"   style="margin-top:7px;">Menu</a>
+          
+            
+            
+        </div><!-- close header div of homepage -->
+        
+      
+    
+        
+   
+          <div role="main" style="padding:1em;">
+            
+      
+              <br />   <ul data-role="listview" id="myTripsView" data-inset="true"  data-icon="location"  >
+                <li>
+                    <a href="#find" data-transition="fade" id="findButton">
+							Tour Properties Near You
+						</a>
+                </li>
+              
+            </ul>
+        <br />
+            <ul data-role="listview" id="flightStatusView" data-inset="true"  data-icon="heart">
+                <li>
+                    <a href="#flightStatus" data-transition="slide">Favorite Properties <span class="bookmark_display"></span></a>
+                </li>
+            </ul>
+             <br />
+            <ul data-role="listview" id="createTourView" data-inset="true" data-theme="d"  data-icon="video">
+                <li>
+                    <a href="#test" data-transition="fade" id="createTourPageButton" data-icon="video">Create a Tour</a>
+                </li>
+            </ul>
+                <br />
+           
+            
+        
+  </div>
+    </div><!-- close home div -->
+   <!-- end home page -->
+    
+   
+    
+    
+    <!-- logon page -->
+    <div id="logon" data-role="page">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false"  data-theme="b">
+           <img src="http://beyondtheballot.com/tour/images/home_logo.png" class="ui-btn-right"   style="margin-top:8px;" />
+            <h1 style="font-size:1.3em">Reala<em>TOUR</em></h1>
+        </div>
+        <div role="main" style="padding:2em;">
+            
+        
+            <form id="login">
+                Email Address:
+                <input type="text" id="email" value="mike@litch.net" /> Password:
+                <input type="text" id="pwd" value="Test12345" />
+                <input type="submit" value="Login"  data-icon="action"/>
+                <input type="button" value="Create a New Account" id="register_button" data-theme="b"  data-icon="user">
+            </form>
+     </div>
+    </div>
+    
+    
+    
+    
+   
+    <!--myTrips page-->
+    <div id="myTrips" data-role="page" data-add-back-btn="true">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Tour a Home</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" id="myTripsListView" data-inset="true" data-theme="d">
+            </ul>
+        </div>
+    </div>
+    
+    <div id="acct" data-role="page">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>
+  My Account
+            </h1>
+             <a href="#nav-panel" data-icon="bars" data-iconpos="notext" data-theme="f">Menu</a>
+        </div>
+          <div role="main" style="padding:2em;">
+              
+        <ul class="fieldlist">
+            <li>Name: <span class="name_display"></span></li>
+            <li>DOB: <span class="dob_display"></span></li>
+        </ul>
+       
+        </div>
+    </div>
+    
+      <div id="register" data-role="page">
+         <div data-role="header" data-position="fixed" data-tap-toggle="false"  data-theme="b">
+           <img src="http://beyondtheballot.com/tour/images/home_logo.png" class="ui-btn-right"   style="margin-top:8px;" />
+            <h1 style="font-size:1.3em">Reala<em>TOUR</em></h1>
+              <a href="#logon" data-icon="back" data-iconpos="left" data-theme="d" style="margin-top:8px;">Back</a>
+        </div>
+            
+        
+          <div role="main" style="padding:2em;">
+          
+        <ul class="fieldlist">
+             <li>
+                <label for="reg_email">Email Address</label>
+                <input id="reg_email" type="email" class="k-textbox" style="width: 100%;" placeholder="Email Address" />
+            </li>
+            
+            <li>
+                <label for="firstName">First Name</label>
+                <input id="firstName" type="text" class="k-textbox" style="width: 100%;" placeholder="First Name" />
+            </li>
+            
+             <li>
+                <label for="lastName">Last Name</label>
+                <input id="lastName" type="text" class="k-textbox" style="width: 100%;" placeholder="Last Name" />
+            </li>
+            
+             <li>
+                <label for="dob">Date of Birth</label>
+                <input id="dob" type="date" class="k-textbox" style="width: 100%;" placeholder="##/##/####" />
+            </li>
+            
+            
+            
+            <li>
+                <label for="reg_pw">Password</label>
+                <input id="reg_pw" type="password" class="k-textbox" style="width: 100%;"  />
+            </li>
+           
+            <li>
+               
+                <input type="submit" value="Register" id="createRegister" />
+            </li>
+        </ul>
+       
+        </div>
+        <a ref="#register_msg" data-rel="popup" data-role="button" data-inline="true" id="register_msg_btn" style="visibility:hidden"></a>
+<div id="register_msg"  data-role="popup"  data-theme="b" data-overlay-theme="b"  data-shadow="true" style="padding:10px;">
+   <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+  <p>
+      testing
+    </p>
+</div>
+    </div>
+    
+    
+    
+    <!--flightStatus page-->
+    <div id="flightStatus" data-role="page" data-add-back-btn="true">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Saved Properties</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" id="Ul1" data-inset="true" data-theme="d">
+                <li>Coming Soon!</li>
+            </ul>
+        </div>
+    </div>
+ 
+    
+       <div id="find" data-role="page" style="padding:0; margin:0; width:105%;">
+           <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Find a Property</h1>
+                <a href="#nav-panel" data-icon="bars" data-iconpos="notext" data-theme="f">Menu</a>
+        </div>
+          
+               <div id="map_canvas"  style="padding:0; margin:0; width:100%;"></div>
+      
+
+    </div>
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!--create a tour page-->
+    <div id="test" data-role="page" data-add-back-btn="true">
+        <div data-role="header"  data-tap-toggle="false" data-position="fixed" data-theme="b" />
+            <img src="http://beyondtheballot.com/tour/images/home_logo.png" class="ui-btn-right"  style="padding-top:7px;" />
+            <h1 style="font-size:1.3em;">Reala<em>TOUR</em></h1>
+            <a href="#nav-panel" data-icon="bars" data-iconpos="notext" data-theme="b"  style="margin-top:8px;">Menu</a>    
+        </div><!--Close header -->
+        <div role="main" style="padding:1em"><!--Page body -->
+              <div id="video"><!--video div -->
+              <button  class="button dh"  id="captureVideo" data-role="button" data-bind="events:{ click: listener}"  data-icon="plus">Capture First Room</button>
+                  <div id="createTourDiv">
+                     <p align="center" style="color:white; text-shadow:none;">
+                      Finished?  
+                     </p>
+                     <button  class="button dh" data-theme="b"  id="createTourButton" data-role="button" data-bind="events:{ click: listener}"  data-icon="video">Create Your Tour</button>
+                     <input type="hidden" id="room_video_url" name="room_video_url" style="display:none;" />
+                     <input type="hidden" id="current_video_url" name="current_video_url" style="display:none;" />
+                     <input type="hidden" id="video_counter" name="video_counter" value="0" style="display:none;" />
+                  </div><!--close create Tour Div -->
+              <a ref="#questions" data-rel="popup" data-role="button" data-inline="true" id="questions_button" style="visibility:hidden"></a>
+              <div id="questions"  data-theme="b" data-role="popup"  class="ui-content" data-transition="flip">
+                <h2>Room Details</h2>
+                <br />
+                <label for="desc">Room Caption</label>
+                <textarea name="desc" id="desc"></textarea>
+                <br />
+                <!--Need to add a loading icon here-->
+
+                  
+                  <input type="button" value="Submit Room Video"  id="room_desc" name="room_desc">
+              </div> <!--Close div questions-->
+              <a ref="#tourQuestions" data-rel="popup" data-dismissible="false" data-role="button" data-inline="true" id="tourQuestions_button" style="visibility:hidden"></a>
+              <div id="tourQuestions"  data-theme="b"   data-dismissible="false"  data-role="popup" class="ui-content" data-transition="flip">
+                 <a ref="#addressQuestion" data-rel="popup" data-role="button" data-inline="true" id="address_button" style="visibility:hidden"></a>
+                     <div id="addressQuestion"  data-theme="b" data-role="popup"  class="ui-content" data-transition="flip">
+                       <p>
+                           test
+                        </p> 
+                    </div><!--Close AddressQuestion Div-->
+                 <h2>Tour Details</h2>
+                 <br />
+                 <label for="test">Tour Title</label>
+                 <input type="text" name="tourTitle" id="tourTitle"></input>
+                 <label for="address" id="addressLabel">Address</label>
+                 <input type="text" name="address" id="address"></input>
+                 <label for="zip" id="zipLabel">Zip</label>
+                 <input type="text" name="zip" id="zip"></input>
+                 <label for="city" style="cityLabel">City</label>
+                 <input type="text" name="city" id="city"></input>
+                    <div data-role="fieldcontain">
+                        <label for="state" class="select" id="stateLabel">State:</label>
+                        <select id="state" data-theme="a" >
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Conn>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div><!--Close DIV Field Contain->
+                    <!--Need to add a loading icon here-->
+                    <button id="finalSubmitTour" name="finalSubmitTour" data-theme="b"   type="submit">Create Video Tour</button>
+                    </div> <!--Close Tour Question DIV-->
+                
+                <a ref="#transparent" data-rel="popup" data-role="button"data-dismissible="false"  data-inline="true" id="instructions" style="visibility:hidden"  data-bind="events:{ click: listener}"></a>
+                <div id="transparent"  data-role="popup"  data-theme="none" data-shadow="false" data-dismissible="false">
+                   <img src="http://www.beyondtheballot.com/images/howto_recordroom.png" class="popphoto" alt="How to record a room.">
+                </div><!--Close Transparent DIV-->
+             </div><!--Close Questions DIV-->
+            
+            <div class="results" style="display:none">
+                    <div id="media"></div><!--Close Media DIV-->
+                    <div id="media_display"> </div><!--Close Media Display DIV-->
+                  <label for="project_id">Project ID</label>
+                  <input type="hidden" value="" id="project_id" name="project_id" />
+            </div><!--Close Results DIV-->
+                
+        </div><!--Close Create TourDIV-->
+    </div><!--Close Main DIV-->
+  </div><!--Close Create Tour Page -->   
+        
+
+
+
+
+
+
+
+
+        
+        
+    <!--programProgress page-->
+    <div id="programProgress" data-role="page" data-add-back-btn="true">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Progress</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" id="Ul3" data-inset="true" data-theme="d">
+                <li>Coming Soon!</li>
+            </ul>
+        </div>
+    </div>
+    <!--Settings page-->
+    <div id="settings" data-role="page" data-add-back-btn="true">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Settings</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" id="Ul4" data-inset="true" data-theme="d">
+                <li>Come on, this is just a sample!</li>
+            </ul>
+        </div>
+    </div>
+    <!-- tour page -->
+    <div id="tour" data-role="page" data-mini="true">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#home" data-role="button" id="backButton" data-transition="flip" class="ui-btn-left" data-rel="back">Back</a>
+            <h1>Tour a Home</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" id="myTripsView" data-inset="true" data-theme="d">
+                <li>
+                    <a href="#map" data-transition="slide">
+							By Current Location
+						</a>
+                </li>
+            </ul>
+            <ul data-role="listview" id="myTripsView" data-inset="true" data-theme="d">
+                <li>
+                    <a href="#tes" data-transition="slide">
+							By Address
+						</a>
+                </li>
+            </ul>
+        </div>
+        
+        
+    </div>
+    
+  
+    <script>
+        var airData = new airlinesData(2000);
+        var airlines = new airlinesApp();
+        airlines.run();
+        document.addEventListener("deviceready", onDeviceReady, false);
+ 
+function id(element) {
+    return document.getElementById(element);
+}
+
+function onDeviceReady() {
+   
+  $('#video video').bind('ended', function(){
+   $(this).parent().fadeOut()
+}) 
+       }
+    
+    
+    </script>
+</body>
+
+</html>
